@@ -1,6 +1,4 @@
 from selenium.webdriver.support.ui import Select
-from selenium.webdriver.support import expected_conditions as EC
-from selenium import webdriver
 
 
 class ProjectHelper:
@@ -18,7 +16,6 @@ class ProjectHelper:
         # submit project creation
         wd.find_element_by_xpath("/html/body/div[3]/form/table/tbody/tr[7]/td/input").click()
 
-
     def fill_project_info(self, project):
         wd = self.app.wd
         wd.find_element_by_name("name").click()
@@ -34,8 +31,29 @@ class ProjectHelper:
 
     def open_manage_tab(self):
         wd = self.app.wd
-        wd.find_element_by_xpath("/html/body/table[2]/tbody/tr/td[1]/a[7]").click()
+        wd.find_elements_by_css_selector("a")[8].click()
 
     def open_manage_projects_tab(self):
         wd = self.app.wd
         wd.find_element_by_xpath("/html/body/div[2]/p/span[2]/a").click()
+
+    def delete_project_by_name(self, name):
+        wd = self.app.wd
+        self.open_manage_tab()
+        self.open_manage_projects_tab()
+        self.select_project_by_name(name)
+        # init deletion
+        wd.find_element_by_css_selector('input.button[value="Delete Project"]').click()
+        # confirmation
+        wd.find_element_by_css_selector('input.button[type=submit]').click()
+
+    def select_project_by_name(self, name):
+        wd = self.app.wd
+        projects_table = wd.find_elements_by_css_selector("table")[2]
+        rows = projects_table.find_elements_by_css_selector("tr")[2:]
+        for element in rows:
+            cells = element.find_elements_by_css_selector("td")
+            name_from_table = cells[0].find_element_by_css_selector("a").text
+            if name_from_table == name:
+                cells[0].find_element_by_css_selector("a").click()
+                break
