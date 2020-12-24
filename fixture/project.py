@@ -1,4 +1,7 @@
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 
 class ProjectHelper:
@@ -31,7 +34,7 @@ class ProjectHelper:
 
     def open_manage_tab(self):
         wd = self.app.wd
-        wd.find_elements_by_css_selector("a")[8].click()
+        wd.find_element_by_xpath("/html/body/table[2]/tbody/tr/td[1]/a[7]").click()
 
     def open_manage_projects_tab(self):
         wd = self.app.wd
