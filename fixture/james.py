@@ -21,9 +21,9 @@ class JamesHelper:
         def __init__(self, host, port, username, password):
             self.telnet = Telnet(host, port, 5)
             self.read_until("Login id:")
-            self.write("username + \n")
+            self.write(username + "\n")
             self.read_until("Password:")
-            self.write("password + \n")
+            self.write(password + "\n")
             self.read_until("Welcome root. HELP for a list of commands")
 
         def read_until(self, text):
@@ -34,7 +34,7 @@ class JamesHelper:
 
         def is_user_registered(self, username):
             self.write("verify %s\n" % username)
-            res = self.telnet.expect("exists", "does not exist")
+            res = self.telnet.expect([b"exists", b"does not exist"])
             return res[0] == 0
 
         def create_user(self, username, password):
