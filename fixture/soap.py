@@ -1,7 +1,6 @@
 from suds.client import Client
 from suds import WebFault
 from model.project import Project
-import re
 
 
 class SoapHelper:
@@ -26,5 +25,5 @@ class SoapHelper:
             name = el[1]
             description = el[7]
             project_list.append(
-            Project(id=str(id), name=name, description=description))
+                Project(id=str(id), name=name, description=description))
         return project_list
